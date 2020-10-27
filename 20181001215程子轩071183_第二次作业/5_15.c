@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<malloc.h>
+#include<stdlib.h>
 
 #define Max 256
 #define Zero 0
@@ -29,15 +30,16 @@ DataType** MatrixBuild(int row, int column){
 
 void CompressDim2Matrix(DataType** origin, int originRow, int originCol, CompressMatrix* result){
     int index = 0;
+    result->rowNumber = originRow;
+    result->colNumber = originCol;
     for(int i = 0; i < originRow; i++){
         for(int j = 0; j < originCol; j++){
             if(*(*(origin + i) + j) != 0){
                 result->matrix[index].data = *(*(origin + i) + j);
                 result->matrix[index].rowIndex = i;
                 result->matrix[index].colIndex = j;
-                result->rowNumber++;
-                result->colNumber++;
                 result->totalNumber++;
+                index++;
             }
         }
     }
@@ -66,6 +68,31 @@ void TranslateCompressedMatrix(CompressMatrix origin, CompressMatrix* transforme
         transformed->matrix[index].colIndex = origin.matrix[i].rowIndex;
         transformed->matrix[index].rowIndex = origin.matrix[i].colIndex;
     }
+    free(number);
+    free(start);
+}
+
+DataType** UncompressMatrix(CompressMatrix matrix){
+    DataType** result;
+    int** flag;
+    flag = (DataType**)calloc(matrix.rowNumber, sizeof(int*));
+    for(int i = 0; i < matrix.rowNumber; i++){
+        *(flag + i) = (DataType*)calloc(matrix.colNumber, sizeof(int));
+    }
+    result = MatrixBuild(matrix.rowNumber, matrix.colNumber);
+    for(int i = 0; i < matrix.totalNumber; i++){
+        MatrixElement element = matrix.matrix[i];
+        *(*(result + element.rowIndex) + element.colIndex) = element.data;
+        *(*(flag + element.rowIndex) + element.colIndex) = 1;
+    }
+    for(int i = 0; i < matrix.rowNumber; i++){
+        for(int j = 0; j < matrix.colNumber; j++){
+            if(*(*(flag + i) + j) != 1){
+                *(*(result + i) + j) = 0;
+            }
+        }
+    }
+    return result;
 }
 
 void VisualCompressedMatrix(CompressMatrix matrix){
@@ -90,41 +117,39 @@ int CompressedMatrixMultiply(CompressMatrix matrix01, CompressMatrix matrix02, C
         printf("Dim Wrong!");
         return 0;
     }
+
+
     else{
         resultMatrix->rowNumber = matrix01.rowNumber;
         resultMatrix->colNumber = matrix02.colNumber;
+        resultMatrix->totalNumber = 0;
         CompressMatrix matrix02T;
         TranslateCompressedMatrix(matrix02, &matrix02T);
-        int* number01 = (int*)calloc(matrix01.rowNumber, sizeof(int));
-        int* number02 = (int*)calloc(matrix02T.rowNumber, sizeof(int));
-        int* index01 = (int*)calloc(matrix01.rowNumber, sizeof(int));
-        int* index02 = (int*)calloc(matrix02T.rowNumber, sizeof(int));
-        *index01 = 0;
-        *index02 = 0;
-        for(int i = 1; i < matrix01.rowNumber; i++){
-            *(index01 + i) = *(index01 + i - 1) + *(number01 + i);
-        }
-        for(int i = 1; i < matrix02T.rowNumber; i++){
-            *(index02 + i) = *(index02 + i - 1) + *(number02 + i);
-        }
-        for(int i = 0; i < matrix01.totalNumber; i++){
-            (*(number01 + matrix01.matrix[i].rowIndex))++;
-        }
-        for(int i = 0; i < matrix02T.totalNumber; i++){
-            (*(number02 + matrix02T.matrix[i].rowIndex))++;
-        }
+        DataType** tempMatrix01;
+        DataType** tempMatrix02;
+        tempMatrix01 = UncompressMatrix(matrix01);
+        tempMatrix02 = UncompressMatrix(matrix02T);
         for(int i = 0; i < matrix01.rowNumber; i++){
             for(int j = 0; j < matrix02T.rowNumber; j++){
-
+                DataType temp = 0;
+                for(int k = 0; k < matrix01.colNumber; k++){
+                    temp += (*(*(tempMatrix01 + i) + k)) * (*(*(tempMatrix02 + j) + k));
+                }
+                resultMatrix->matrix[resultMatrix->totalNumber].rowIndex = i;
+                resultMatrix->matrix[resultMatrix->totalNumber].colIndex = j;
+                resultMatrix->matrix[resultMatrix->totalNumber].data = temp;
+                resultMatrix->totalNumber++;
             }
         }
+        return 1;
     }
 }
 
 void main(){
-    int size = 3;
+    int size = 2;
     CompressMatrix matrix01;
     CompressMatrix matrix02;
+    CompressMatrix result;
 
     matrix01.colNumber = size;
     matrix01.rowNumber = size;
@@ -145,12 +170,28 @@ void main(){
         }
     }
 
-    VisualCompressedMatrix(matrix01);
-    CompressMatrix matrix01T;
-    TranslateCompressedMatrix(matrix01, &matrix01T);
-    VisualCompressedMatrix(matrix01T);
-
-
     matrix02.colNumber = size;
     matrix02.rowNumber = size;
+    matrix02.totalNumber = 0;
+    int index02 = 0;
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            int input;
+            printf("please input %d number\n", i*size + j);
+            scanf("%d", &input);
+            if(input != 0){
+                matrix02.matrix[index02].data = input;
+                matrix02.matrix[index02].colIndex = j;
+                matrix02.matrix[index02].rowIndex = i;
+                matrix02.totalNumber++;
+                index02++;
+            }
+        }
+    }
+
+    VisualCompressedMatrix(matrix01);
+    VisualCompressedMatrix(matrix02);
+    CompressedMatrixMultiply(matrix01, matrix02, &result);
+    VisualCompressedMatrix(result);
+
 }
