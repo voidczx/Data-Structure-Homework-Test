@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1604158562 source:c:\users\94342\desktop\datastructure\binarytreelayertraverse.c
+	"BinaryTree.h"
+	"BinaryTreeLayerTraverseQueue.h"
+	<math.h>
+
+1604155955 c:\users\94342\desktop\datastructure\binarytree.h
+	<malloc.h>
+	<stdio.h>
+
+1604158574 c:\users\94342\desktop\datastructure\binarytreelayertraversequeue.h
+	<stdlib.h>
+	<stdio.h>
+
