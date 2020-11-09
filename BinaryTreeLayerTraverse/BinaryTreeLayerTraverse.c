@@ -15,27 +15,27 @@ void BinaryTreeLayerTraverse(BinaryTreeNode* root){
         if(p->leftChild != NULL || p->rightChild != NULL){
             if(p->leftChild != NULL)
                 NTSeqQueueEnter(BinaryTreeNodeQueue, *(p->leftChild));
-            else{
-                BinaryTreeNode* temp = (BinaryTreeNode*)malloc(sizeof(BinaryTreeNode));
-                temp->data = '#';
-                temp->leftChild = NULL;
-                temp->rightChild = NULL;
-                temp->layerIndex = p->layerIndex + 1;
-                NTSeqQueueEnter(BinaryTreeNodeQueue, *temp);
-            }
+//            else{
+//                BinaryTreeNode* temp = (BinaryTreeNode*)malloc(sizeof(BinaryTreeNode));
+//                temp->data = '#';
+//                temp->leftChild = NULL;
+//                temp->rightChild = NULL;
+//                temp->layerIndex = p->layerIndex + 1;
+//                NTSeqQueueEnter(BinaryTreeNodeQueue, *temp);
+//            }
             if(p->rightChild != NULL)
                 NTSeqQueueEnter(BinaryTreeNodeQueue, *(p->rightChild));
-            else{
-                BinaryTreeNode* temp = (BinaryTreeNode*)malloc(sizeof(BinaryTreeNode));
-                temp->data = '#';
-                temp->leftChild = NULL;
-                temp->rightChild = NULL;
-                temp->layerIndex = p->layerIndex + 1;
-                NTSeqQueueEnter(BinaryTreeNodeQueue, *temp);
-            }
+//            else{
+//                BinaryTreeNode* temp = (BinaryTreeNode*)malloc(sizeof(BinaryTreeNode));
+//                temp->data = '#';
+//                temp->leftChild = NULL;
+//                temp->rightChild = NULL;
+//                temp->layerIndex = p->layerIndex + 1;
+//                NTSeqQueueEnter(BinaryTreeNodeQueue, *temp);
+//            }
         }
         if(p->layerIndex > layerIndex){
-            printf("\n");
+            //printf("\n");
             layerIndex = p->layerIndex;
         }
         printf("%c", p->data);

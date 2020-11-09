@@ -12,3 +12,16 @@
 	<stdlib.h>
 	<stdio.h>
 
+1604298502 source:c:\users\94342\desktop\datastructure\binarytreelayertraverse\binarytreelayertraverse.c
+	"BinaryTree.h"
+	"BinaryTreeLayerTraverseQueue.h"
+	<math.h>
+
+1604155955 c:\users\94342\desktop\datastructure\binarytreelayertraverse\binarytree.h
+	<malloc.h>
+	<stdio.h>
+
+1604158574 c:\users\94342\desktop\datastructure\binarytreelayertraverse\binarytreelayertraversequeue.h
+	<stdlib.h>
+	<stdio.h>
+

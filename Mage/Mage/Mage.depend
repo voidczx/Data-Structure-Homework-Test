@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1604568785 source:c:\users\94342\desktop\datastructure\mage\mage\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	"AStarAviation.h"
+	"RSLNode.h"
+
+1604911225 c:\users\94342\desktop\datastructure\mage\mage\astaraviation.h
+	<stdlib.h>
+	<stdio.h>
+
+1604563789 source:c:\users\94342\desktop\datastructure\mage\mage\rslnode.c
+	"RSLNode.h"
+
+1604563761 c:\users\94342\desktop\datastructure\mage\mage\rslnode.h
+
