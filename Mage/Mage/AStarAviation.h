@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX_SIDE_LENGTH 7
+#define MAX_SIDE_LENGTH 10
 
 typedef struct node01{
     struct node01* parent;
@@ -175,6 +175,7 @@ roadNode* roadSelect(roadNode* theMap[MAX_SIDE_LENGTH][MAX_SIDE_LENGTH], roadNod
         return current->parent;
     }
 
+
     switch(index){
     case 1:
         return up;
@@ -216,6 +217,7 @@ roadNode* GenerateTerminal(roadNode* theMap[MAX_SIDE_LENGTH][MAX_SIDE_LENGTH], i
     terminal->roadFlag = 1;
     terminal->positionX = x;
     terminal->positionY = y;
+    return terminal;
 }
 
 

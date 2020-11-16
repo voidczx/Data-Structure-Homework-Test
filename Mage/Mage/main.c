@@ -84,6 +84,10 @@ int main()
     road = start;
     while(road->positionX != terminal->positionX || road->positionY != terminal->positionY){
         road = roadSelect(theMap, road);
+        if(road == NULL){
+            printf("this is a DEAD ROAD!!!");
+            exit(123456);
+        }
     }
 
     // get the road point

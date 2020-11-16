@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1605360469 source:c:\users\94342\desktop\datastructure\kruskal\kruskal\main.c
+	<stdio.h>
+	<stdlib.h>
+	"SeqList.h"
+	"Graph.h"
+	"MergingSort.h"
+	"Krustal.h"
+
+1605266120 c:\users\94342\desktop\datastructure\kruskal\kruskal\seqlist.h
+	<stdlib.h>
+
+1605278884 c:\users\94342\desktop\datastructure\kruskal\kruskal\graph.h
+
+1605368476 c:\users\94342\desktop\datastructure\kruskal\kruskal\mergingsort.h
+	<stdlib.h>
+
+1605368222 c:\users\94342\desktop\datastructure\kruskal\kruskal\krustal.h
+	<stdlib.h>
+
